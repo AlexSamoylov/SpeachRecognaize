@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="709.0" prefWidth="1009.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dnu.samoylov.controller.speach.MainController">
+   <children>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="377.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Файл">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#loadData" text="открыть" />
+                  <MenuItem mnemonicParsing="false" text="бд эталонов" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Спектр">
+            <items>
+                  <RadioMenuItem fx:id="YolshSelected" mnemonicParsing="false" text="Уолша" />
+                  <RadioMenuItem mnemonicParsing="false" text="Фурье" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TabPane layoutX="96.0" layoutY="26.0" prefHeight="683.0" prefWidth="1009.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+        <tabs>
+          <Tab text="Исходный">
+               <content>
+                  <LineChart fx:id="chart1">
+                    <xAxis>
+                      <NumberAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+               </content>
+            </Tab>
+          <Tab text="Без латентных">
+               <content>
+                  <LineChart fx:id="chart2">
+                    <xAxis>
+                      <NumberAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+               </content>
+            </Tab>
+            <Tab text="Нормализированный">
+               <content>
+                  <LineChart fx:id="chart3">
+                    <xAxis>
+                      <NumberAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+               </content>
+            </Tab>
+            <Tab text="Спектр">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                         <TextField layoutX="14.0" layoutY="620.0" prefWidth="50" text="${trackBar1.value}" />
+                        <Slider fx:id="trackBar1" layoutX="75.0" layoutY="505.0" prefHeight="14.0" prefWidth="902.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="32.0" />
+                        <LineChart fx:id="chart4" layoutY="7.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0">
+                          <xAxis>
+                            <NumberAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Полосы">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <LineChart fx:id="chart5" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <xAxis>
+                            <NumberAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+
+                         <TextField layoutX="14.0" layoutY="620.0" prefWidth="50" text="${trackBar2.value}" />
+                        <Slider fx:id="trackBar2" layoutX="76.0" layoutY="586.0" prefHeight="14.0" prefWidth="901.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="76.0" AnchorPane.rightAnchor="32.0" />
+                        <CheckBox layoutX="47.0" layoutY="568.0" mnemonicParsing="false" text="Спектр" />
+                        <CheckBox layoutX="132.0" layoutY="568.0" mnemonicParsing="false" text="ФНЧ" />
+                        <TextField fx:id="textBox1" layoutX="248.0" layoutY="564.0" text="0.1" />
+                        <Label layoutX="248.0" layoutY="547.0" text="f cp." />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Распознование">
+               <content>
+                  <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="nameCol" prefWidth="221.0" text="Имя файла" />
+                      <TableColumn fx:id="distanceCol" minWidth="0.0" prefWidth="174.0" text="Расстояние" />
+                        <TableColumn fx:id="minCol" prefWidth="175.0" text="Минимальное" />
+                    </columns>
+                  </TableView>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

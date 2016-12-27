@@ -43,6 +43,7 @@ public class MainController extends AbstractFxmlController implements Initializa
     public TableColumn nameCol;
     public TableColumn distanceCol;
     public TableColumn minCol;
+    private Path path;
 
 
     @Override
@@ -91,7 +92,9 @@ public class MainController extends AbstractFxmlController implements Initializa
     public void loadData() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data/"));
-        Sound dataSet = loadDataSet(fileChooser.showOpenDialog(getView().getScene().getWindow()).toPath());
+        this.path = fileChooser.showOpenDialog(getView().getScene().getWindow()).toPath();
+        Path path = this.path;
+        Sound dataSet = loadDataSet(path);
         twerkWithDataSet(dataSet);
     }
 
@@ -118,11 +121,13 @@ public class MainController extends AbstractFxmlController implements Initializa
         if (YolshSelected.isSelected()) {
             DrawWalsch((int) trackBar2.getValue());
             DrawWalschSmoothing((int) trackBar2.getValue());
-            OpenHelper.saveToFileArray(sound, "walsch", System.getProperty("user.dir") + "/data/last.dat");
+            OpenHelper.saveToFileArray(sound, "walsch", path.toString()
+                    .replace(".WAV", ".dat"));
         } else {
             DrawFourer((int) trackBar2.getValue());
             DrawFourerSmoothing((int) trackBar2.getValue());
-            OpenHelper.saveToFileArray(sound, "fourer", System.getProperty("user.dir") + "/data/last.dat");
+            OpenHelper.saveToFileArray(sound, "fourer", path.toString()
+                    .replace(".WAV", ".dat"));
         }
 
 
@@ -238,7 +243,7 @@ public class MainController extends AbstractFxmlController implements Initializa
     }
 
 
-    private void downloadEtalons() throws IOException {
+    public void downloadEtalons() throws IOException {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("dat files (*.dat)", "*.dat"));
@@ -256,7 +261,8 @@ public class MainController extends AbstractFxmlController implements Initializa
                     elem = lines.get(i).split(" ");
 
                     for (int j = 0; j < elem.length; j++) {
-                        array[i][j]= Double.valueOf(elem[j]);
+                        array[i][j]= Double.valueOf(elem[j]
+                                .replace(',', '.'));
                     }
 
                 }

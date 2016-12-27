@@ -12,7 +12,7 @@
           <Menu mnemonicParsing="false" text="Файл">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#loadData" text="открыть" />
-                  <MenuItem mnemonicParsing="false" text="бд эталонов" />
+                  <MenuItem onAction="#downloadEtalons" mnemonicParsing="false" text="бд эталонов" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Спектр">

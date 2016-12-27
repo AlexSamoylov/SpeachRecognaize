@@ -1,6 +1,6 @@
-package org.dnu.samoylov.service.matrix;
+package org.dnu.samoylov.service.dinamic;
 
-public class DistanceMatrix {
+class DistanceMatrix {
     public Double[][] array;
 
     public DistanceMatrix(Double[][] array) {

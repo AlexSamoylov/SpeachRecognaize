@@ -1,7 +1,4 @@
-package org.dnu.samoylov.service;
-
-import org.dnu.samoylov.service.matrix.DistanceMatrix;
-import org.dnu.samoylov.service.matrix.FourerMatrix;
+package org.dnu.samoylov.service.dinamic;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,31 +20,33 @@ public class DinamicProgramming {
 
 
 
-    public void CalculateAllMatrixDistance() {
+    public void calculateAllMatrixDistance() {
         for (int i = 0; i < fileMatrix.size(); i++) {
-            distanceMatrixes.add(InitDistanceMatrix(currentMatrix, fileMatrix.get(i)));
+            distanceMatrixes.add(calculacteDistanceMatrix(currentMatrix, fileMatrix.get(i)));
         }
     }
 
-    public void InitDistances() {
+    public void initDistances() {
         for (int i = 0; i < distanceMatrixes.size(); i++) {
-            distances.add(CalculateMinDistance(distanceMatrixes.get(i)));
+            distances.add(calculateMinDistance(distanceMatrixes.get(i)));
         }
     }
 
 
+    private DistanceMatrix calculacteDistanceMatrix(FourerMatrix firstMatrix, FourerMatrix secondMatrix) {
+        Double[][] distanceMatrix = new Double[firstMatrix.array[0].length][secondMatrix.array[0].length];
 
-
-
-    private Double[] GetColum(double[][] array, int columNumber) {
-        List<Double> listElem = new ArrayList<>();
-        for (int i = 0; i < array[0].length; i++) {
-            listElem.add(array[i][columNumber]);
+        for (int i = 0; i < firstMatrix.array[0].length; i++) {
+            for (int j = 0; j < secondMatrix.array[0].length; j++) {
+                distanceMatrix[i][j] = calculateEuclideanMetric(getColum(firstMatrix.array, i), getColum(secondMatrix.array, j));
+            }
         }
-        return listElem.toArray(new Double[listElem.size()]);
+        return new DistanceMatrix(distanceMatrix);
     }
 
-    private double CalculateEuclideanMetric(Double[] firstArray, Double[] secondArray) {
+
+
+    private double calculateEuclideanMetric(Double[] firstArray, Double[] secondArray) {
         double distance = 0;
 
         for (int i = 0; i < firstArray.length; i++) {
@@ -58,24 +57,29 @@ public class DinamicProgramming {
         return distance;
     }
 
-    private DistanceMatrix InitDistanceMatrix(FourerMatrix firstMatrix, FourerMatrix secondMatrix) {
-        Double[][] distanceMatrix = new Double[firstMatrix.array[1].length][secondMatrix.array[1].length];
-        for (int i = 0; i < firstMatrix.array[1].length; i++) {
-            for (int j = 0; j < secondMatrix.array[1].length; j++) {
-                distanceMatrix[i][j] = CalculateEuclideanMetric(GetColum(firstMatrix.array, i), GetColum(secondMatrix.array, j));
-            }
+    private Double[] getColum(double[][] array, int columnNumber) {
+        List<Double> listElem = new ArrayList<>();
+        for (int i = 0; i < array.length; i++) {
+            listElem.add(array[i][columnNumber]);
         }
-        return new DistanceMatrix(distanceMatrix);
+        return listElem.toArray(new Double[listElem.size()]);
     }
 
-    private double CalculateMinDistance(DistanceMatrix matrix) {
-        double[][] d = new double[matrix.array[0].length][matrix.array[1].length];
-        double[][] count = new double[matrix.array[0].length][matrix.array[1].length];
 
-        for (int i = 0; i < matrix.array[0].length; i++) {
-            for (int j = 0; j < matrix.array[1].length; j++) {
+
+    private double calculateMinDistance(DistanceMatrix matrix) {
+        int firstLevelSize = matrix.array.length;
+        int secondLevelSize = matrix.array[0].length;
+
+        double[][] d = new double[firstLevelSize][secondLevelSize];
+        double[][] count = new double[firstLevelSize][secondLevelSize];
+
+        for (int i = 0; i < firstLevelSize; i++) {
+            for (int j = 0; j < secondLevelSize; j++) {
+
                 List<Double> list = new ArrayList<>();
                 List<Double> listCount = new ArrayList<>();
+
                 if ((i == 0) && (j == 0)) {
                     list.add(0d);
                     listCount.add(0d);
@@ -100,6 +104,6 @@ public class DinamicProgramming {
             }
         }
 
-        return d[matrix.array[0].length - 1][matrix.array[1].length - 1] / count[matrix.array[0].length - 1][matrix.array[1].length - 1];
+        return d[matrix.array.length - 1][matrix.array[1].length - 1] / count[matrix.array.length - 1][matrix.array[1].length - 1];
     }
 }

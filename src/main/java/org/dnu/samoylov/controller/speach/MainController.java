@@ -1,6 +1,5 @@
 package org.dnu.samoylov.controller.speach;
 
-import com.sun.jnlp.ApiDialog;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,11 +10,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import org.dnu.samoylov.controller.main.AbstractFxmlController;
-import org.dnu.samoylov.service.DinamicProgramming;
 import org.dnu.samoylov.service.LineRepresentation;
 import org.dnu.samoylov.service.OpenHelper;
 import org.dnu.samoylov.service.Sound;
-import org.dnu.samoylov.service.matrix.FourerMatrix;
+import org.dnu.samoylov.service.dinamic.DinamicProgramming;
+import org.dnu.samoylov.service.dinamic.FourerMatrix;
 import org.springframework.stereotype.Controller;
 
 import java.io.File;
@@ -82,9 +81,9 @@ public class MainController extends AbstractFxmlController implements Initializa
         });
 
 
-        nameCol.setCellValueFactory(new PropertyValueFactory("name"));
-        distanceCol.setCellValueFactory(new PropertyValueFactory("distance"));
-        minCol.setCellValueFactory(new PropertyValueFactory("min"));
+        nameCol.setCellValueFactory(new PropertyValueFactory("nameCol"));
+        distanceCol.setCellValueFactory(new PropertyValueFactory("distanceCol"));
+        minCol.setCellValueFactory(new PropertyValueFactory("minCol"));
     }
 
 
@@ -276,8 +275,8 @@ public class MainController extends AbstractFxmlController implements Initializa
             } else {
                 dinamic = new DinamicProgramming(matrix, sound.lineRepresentationWalschSmoothing);
             }
-            dinamic.CalculateAllMatrixDistance();
-            dinamic.InitDistances();
+            dinamic.calculateAllMatrixDistance();
+            dinamic.initDistances();
             DGVDistances(dinamic.distances, matrix);
 
     }
@@ -295,7 +294,7 @@ public class MainController extends AbstractFxmlController implements Initializa
             }
 
             items.add(new Dto(
-                    String.valueOf(i + 1) + " " + fourer.get(i).name,
+                    fourer.get(i).name,
                     String.valueOf(listOfDistances.get(i)),
                     isMin));
 
@@ -303,7 +302,7 @@ public class MainController extends AbstractFxmlController implements Initializa
     }
 
 
-private static final class Dto {
+public static final class Dto {
     public String nameCol;
     public String distanceCol;
     public String minCol;

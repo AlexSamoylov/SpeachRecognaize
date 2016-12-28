@@ -1,6 +1,6 @@
 package org.dnu.samoylov.service.dinamic;
 
-class FourerMatrix {
+public class FourerMatrix {
     public double[][] array;
     public String name;
 
